@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MineCash</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Monetag Ad Script -->
+  <script src='//libtl.com/sdk.js' data-zone='10399659' data-sdk='show_10399659'></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .card {
+      background: #1e293b;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:disabled {
+      background: gray;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>⛏ MineCash</h1>
+  <p>Balance: <span id="coin">0</span> Coin</p>
+
+  <div class="card">
+    <h3>🎯 Watch Ad</h3>
+    <p>1 Ad = 1 Coin</p>
+    <button id="adBtn" onclick="showAd()">Watch Ad</button>
+    <p id="timer"></p>
+  </div>
+
+  <div class="card">
+    <h3>⚡ Mining</h3>
+    <p>Mining requires watching ads every 10 minutes</p>
+    <button onclick="startMining()">Start Mining</button>
+  </div>
+
+  <script>
+    let coin = 0;
+    let cooldown = false;
+
+    function showAd() {
+      if (cooldown) return;
+
+      if (typeof show_10399659 === "function") {
+        show_10399659(); // Monetag ad show
+      }
+
+      coin += 1;
+      document.getElementById("coin").innerText = coin;
+
+      cooldown = true;
+      let time = 15;
+      document.getElementById("adBtn").disabled = true;
+
+      let interval = setInterval(() => {
+        document.getElementById("timer").innerText =
+          "Wait " + time + " seconds";
+        time--;
+        if (time < 0) {
+          clearInterval(interval);
+          cooldown = false;
+          document.getElementById("adBtn").disabled = false;
+          document.getElementById("timer").innerText = "";
+        }
+      }, 1000);
+    }
+
+    function startMining() {
+      alert("⛏ Mining Started! Watch ads every 10 minutes to continue.");
+    }
+  </script>
+
+</body>
+</html>
